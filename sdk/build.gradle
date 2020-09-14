@@ -43,3 +43,5 @@ dependencies {
     // okhttp 日志
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 }
+
+apply from:"./mavenpublish_local.gradle"
