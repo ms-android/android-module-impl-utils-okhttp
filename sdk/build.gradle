@@ -32,6 +32,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
+    implementation "com.ms:module-super:debug-latest"
+
+
     // okhttp
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.10.0'
 
