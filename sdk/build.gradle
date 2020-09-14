@@ -34,7 +34,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
 
-    implementation "com.ms:module-super:debug-latest"
+    releaseImplementation "com.ms:android-module-super:latest-RELEASE"
+    debugImplementation "com.ms:android-module-super:latest-DEBUG"
 
 
     // okhttp
@@ -44,4 +45,4 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 }
 
-apply from:"./mavenpublish_local.gradle"
+apply from: "./maven_publish.gradle"

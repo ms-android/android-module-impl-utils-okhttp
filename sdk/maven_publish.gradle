@@ -1,0 +1,64 @@
+
+
+
+apply plugin: "maven-publish"
+
+
+task androidJavadocs(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    android.libraryVariants.all { variant ->
+        if (variant.name == 'release') {
+            owner.classpath += variant.javaCompile.classpath
+        }
+    }
+    exclude '**/R.html', '**/R.*.html', '**/index.html'
+}
+
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
+}
+
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+
+afterEvaluate {
+    publishing {
+        repositories {
+            maven {
+                url "https://nexus.mhw828.com/repository/maven-releases/"
+                credentials {
+                    username System.getenv("MAVEN_USERNAME")
+                    password System.getenv("MAVEN_PASSWORD")
+                }
+            }
+        }
+
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = 'com.ms'
+                artifactId = rootProject.name
+                version = 'latest-RELEASE'
+            }
+            // Creates a Maven publication called “debug”.
+            debug(MavenPublication) {
+                // Applies the component for the debug build variant.
+                from components.debug
+
+                groupId = 'com.ms'
+                artifactId = rootProject.name
+                version = 'latest-DEBUG'
+            }
+        }
+    }
+}
