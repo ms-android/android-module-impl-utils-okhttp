@@ -19,34 +19,27 @@ public class OkHttpUtils {
 
     public static OkHttpClient getInstance() {
         if (client == null) {
-
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
             if (Modules.getRequestSettingModule().getConnectTimeout() != 0) {
                 builder.connectTimeout(Modules.getRequestSettingModule().getConnectTimeout(), TimeUnit.SECONDS);
             } else {
                 builder.connectTimeout(CONNECTTIMEOUT, TimeUnit.SECONDS);
             }
-
             if (Modules.getRequestSettingModule().getWriteTimeout() != 0) {
                 builder.connectTimeout(Modules.getRequestSettingModule().getWriteTimeout(), TimeUnit.SECONDS);
             } else {
                 builder.readTimeout(READTIMEOUT, TimeUnit.SECONDS);
             }
-
             if (Modules.getRequestSettingModule().getReadTimeout() != 0) {
                 builder.connectTimeout(Modules.getRequestSettingModule().getReadTimeout(), TimeUnit.SECONDS);
             } else {
                 builder.writeTimeout(WRITETIMEOUT, TimeUnit.SECONDS);
             }
-
-
             if (Modules.getRequestSettingModule().getRequestLogOut()) {
                 builder.addInterceptor(new LogInterceptor());
             }
-
-
             client = builder.build();
+
         }
         return client;
     }
