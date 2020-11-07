@@ -5,7 +5,13 @@ import com.ms.module.supers.client.Modules;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.*;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 public class OkHttpUtils {
     public static long CONNECTTIMEOUT = 60;
@@ -20,22 +26,22 @@ public class OkHttpUtils {
     public static OkHttpClient getInstance() {
         if (client == null) {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            if (Modules.getRequestSettingModule().getConnectTimeout() != 0) {
-                builder.connectTimeout(Modules.getRequestSettingModule().getConnectTimeout(), TimeUnit.SECONDS);
+            if (Modules.getRequestConfigModule().getConnectTimeout() != 0) {
+                builder.connectTimeout(Modules.getRequestConfigModule().getConnectTimeout(), TimeUnit.SECONDS);
             } else {
                 builder.connectTimeout(CONNECTTIMEOUT, TimeUnit.SECONDS);
             }
-            if (Modules.getRequestSettingModule().getWriteTimeout() != 0) {
-                builder.connectTimeout(Modules.getRequestSettingModule().getWriteTimeout(), TimeUnit.SECONDS);
+            if (Modules.getRequestConfigModule().getWriteTimeout() != 0) {
+                builder.connectTimeout(Modules.getRequestConfigModule().getWriteTimeout(), TimeUnit.SECONDS);
             } else {
                 builder.readTimeout(READTIMEOUT, TimeUnit.SECONDS);
             }
-            if (Modules.getRequestSettingModule().getReadTimeout() != 0) {
-                builder.connectTimeout(Modules.getRequestSettingModule().getReadTimeout(), TimeUnit.SECONDS);
+            if (Modules.getRequestConfigModule().getReadTimeout() != 0) {
+                builder.connectTimeout(Modules.getRequestConfigModule().getReadTimeout(), TimeUnit.SECONDS);
             } else {
                 builder.writeTimeout(WRITETIMEOUT, TimeUnit.SECONDS);
             }
-            if (Modules.getRequestSettingModule().getRequestLogOut()) {
+            if (Modules.getRequestConfigModule().getRequestLogOut()) {
                 builder.addInterceptor(new LogInterceptor());
             }
             client = builder.build();
